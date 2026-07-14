@@ -1,0 +1,37 @@
+# config.yaml
+model_version: v2.2
+date: 2026-07-03
+branch: exp/v2.2-state-encoder-capacity
+changes: |
+  方案B + 方案C:
+  1. 重建 StateEncoder: Conv1D temporal encoder (2层) + 统计特征 → dual-path fusion
+  2. dep_dim: 16→64 (4x), state_dim: 32→128 (4x)
+  3. trust_logit: -2.0 (sigmoid=0.119, v1=0.018, v2.1=~1.0)
+
+hparams:
+  sdr_state_dim: 128          # was 32 in v1/v2.1
+  sdr_dep_dim: 64              # was 16 in v1/v2.1
+  sdr_trust_logit: -2.0        # v1: -4.0, v2.1: -1.0
+  sdr_residual_scale: 0.15     # keep from v2.1
+  sdr_use_learnable_gate: 1    # keep from v2.1
+  sdr_num_groups: 4
+  sdr_residual_target_lambda: 0.05
+  sdr_aux_lambda: 0.001
+
+state_encoder_v2.2:
+  conv_path:
+    - Conv1d(C, 64, k=7, p=3) → GELU → Dropout
+    - Conv1d(64, 64, k=5, p=2) → GELU
+    - AdaptiveAvgPool1d(1) → [B, 64]
+  stat_path:
+    - 6 stats per channel (mean/std/trend/last/half_shift/range)
+    - Linear(6*C, 64) → [B, 64]
+  fusion:
+    - Concat [B, 128] → Linear(128, state_dim) → GELU → Linear(state_dim, state_dim)
+
+comparison:
+  v1:   6 stats → MLP, dep=16, state=32, gate=0.018 (fixed)
+  v2.1: 6 stats → MLP, dep=16, state=32, gate=learnable (~0.995)
+  v2.2: Conv1D+stats → dual-path → MLP, dep=64, state=128, gate=learnable (~0.119 initial)
+
+  Params increase: ~300K extra (trivial vs XLinear backbone's millions)

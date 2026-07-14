@@ -1,0 +1,3 @@
+- [sdrtrc-project-workflow](sdrtrc-project-workflow.md) — SDRTRC 论文项目 Git 工作流、远程 GPU 训练、实验记录规范
+- [sdrtrc-experiment-results](sdrtrc-experiment-results.md) — v1/v2.1/v2.2 三轮实验完整结果、架构诊断与 v3 方向建议
+- [jx-server-default-container](jx-server-default-container.md) — jx 服务器 Docker 容器默认配置

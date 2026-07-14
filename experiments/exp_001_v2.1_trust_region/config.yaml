@@ -1,0 +1,28 @@
+# config.yaml
+model_version: v2.1
+date: 2026-07-02
+branch: exp/v2.1-trust-region-fix
+changes: "方案A: 修复Trust Region —— 增大trust_logit (-4.0→-1.0), 增大residual_scale (0.08→0.15), 启用learnable_gate (0→1)"
+
+hparams:
+  sdr_trust_logit: -1.0       # was -4.0 (sigmoid: 0.018 → 0.269)
+  sdr_residual_scale: 0.15    # was 0.08
+  sdr_use_learnable_gate: 1   # was 0 (fixed)
+  sdr_state_dim: 32
+  sdr_dep_dim: 16
+  sdr_num_groups: 4
+  sdr_residual_target_lambda: 0.05
+  sdr_aux_lambda: 0.001
+
+expected_effect: |
+  trust_logit -1.0 → sigmoid(-1.0)=0.269 (vs 0.018 before, ~15x larger gate)
+  residual_scale 0.15 → max correction ≈ 0.269 * 0.15 = 0.040 (vs 0.0014 before, ~29x)
+  learnable_gate=1 → gate can adapt per horizon group
+  预期: 至少在某些数据集上看到 >0.01 的 MSE 改善
+
+comparison:
+  v1:
+    max_correction: risk * 0.018 * 0.08 ≈ 0.0014
+  v2.1:
+    max_correction: risk * learnable_gate * 0.15, 初始 gate ≈ 0.269
+    effective ~29x larger correction ceiling
