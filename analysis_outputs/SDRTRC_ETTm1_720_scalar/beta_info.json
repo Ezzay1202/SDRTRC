@@ -1,0 +1,14 @@
+{
+  "mode": "scalar",
+  "num_groups": 4,
+  "clip_min": 0.0,
+  "clip_max": 1.0,
+  "beta_shape": [],
+  "beta": 0.8958008574153132,
+  "base_val_pred": "results/ETTm1_96_720_XLinear_ETTm1_ftM_sl96_ll48_pl720_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0/val_pred.npy",
+  "ours_val_pred": "results/ETTm1_SDRTR_96_720_SDRTR_ETTm1_ftM_sl96_ll48_pl720_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_SDR_TR_0/val_pred.npy",
+  "val_true": "results/ETTm1_96_720_XLinear_ETTm1_ftM_sl96_ll48_pl720_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0/val_true.npy",
+  "base_test_pred": "results/ETTm1_96_720_XLinear_ETTm1_ftM_sl96_ll48_pl720_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0/pred.npy",
+  "ours_test_pred": "results/ETTm1_SDRTR_96_720_SDRTR_ETTm1_ftM_sl96_ll48_pl720_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_SDR_TR_0/pred.npy",
+  "test_true": "results/ETTm1_96_720_XLinear_ETTm1_ftM_sl96_ll48_pl720_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0/true.npy"
+}
