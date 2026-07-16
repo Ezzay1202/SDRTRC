@@ -1,6 +1,6 @@
 from data_provider.data_factory import data_provider
 from exp.exp_basic import Exp_Basic
-from models import XLinear, XLinear_ES, XLinear_GT, HSDNet, SDRTR, SDRTR_v31, SDRTR_v32
+from models import XLinear, XLinear_ES, XLinear_GT, HSDNet, SDRTR, SDRTR_v31, SDRTR_v32, SDRTR_v4
 from utils.tools import EarlyStopping, adjust_learning_rate, visual, test_params_flop
 from utils.metrics import metric
 
@@ -33,7 +33,9 @@ class Exp_Main(Exp_Basic):
             'SDR-TR': SDRTR,
             'SDR_TR': SDRTR,            'SDRTR_v31': SDRTR_v31,            'SDR-TR-v31': SDRTR_v31,
             'SDRTR_v32': SDRTR_v32,
-            'SDR-TR-v32': SDRTR_v32
+            'SDR-TR-v32': SDRTR_v32,
+            'SDRTR_v4': SDRTR_v4,
+            'SDR-TR-v4': SDRTR_v4
         }
         model = model_dict[self.args.model].Model(self.args).float()
 
